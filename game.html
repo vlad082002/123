@@ -1,0 +1,69 @@
+<html>
+<canvas id="gameCanvas" width="800" height="600"></canvas>
+
+<script>
+var canvas;
+var canvasContext;
+const PADDLE_THICKNESS = 15;
+const PADDLE_LENGHT = 100;
+var ballRadius = 8;
+var ballX = 100;
+var ballY = 100;
+var ballSpeedX = 5;
+var ballSpeedY = 3;
+
+window.onload = function() {
+	canvas = document.getElementById('gameCanvas');
+	canvasContext = canvas.getContext('2d');
+	
+	var framesPerSec = 30;
+	setInterval(function() {
+		moveEverything();
+		drawEverything();
+	}, 1000/framesPerSec );
+
+}
+
+function drawEverything() {
+	// screen
+	colorRect(0,0,canvas.width,canvas.height,'black');
+	
+	// paddle
+	colorRect(canvas.width/2-PADDLE_LENGHT/2,canvas.height-PADDLE_THICKNESS,PADDLE_LENGHT,PADDLE_THICKNESS,'white');
+
+	// ball
+	colorCircle(ballX,ballY,ballRadius,'white')
+}
+
+function moveEverything() {
+	ballX += ballSpeedX;
+	ballY += ballSpeedY;
+	
+	if(ballX < ballRadius) {
+		ballSpeedX = -ballSpeedX
+	}
+	
+	if(ballX > canvas.width-ballRadius) {
+	ballSpeedX = -ballSpeedX
+	}
+
+}
+
+
+function colorRect(leftX,topY, width, height, drawColor) {
+	canvasContext.fillStyle = drawColor;
+	canvasContext.fillRect(leftX,topY, width, height);
+}
+	
+function colorCircle(centerX,centerY,radius,drawColor) {
+	canvasContext.fillStyle = drawColor;
+	canvasContext.beginPath;
+	canvasContext.arc(centerX,centerY,radius,0,Math.PI*2,true);
+	canvasContext.fill();
+}
+	
+
+</script>
+
+
+</html>
